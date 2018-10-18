@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    depends_on:
+      - db
+    volumes:
+      - ./web:/usr/src/app
+    ports:
+     - "49160:8080"
+  db:
+    build: ./db
+    ports:
+      - "5000:5000"
