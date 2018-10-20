@@ -14,5 +14,3 @@ RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
-
-CMD [ "node", "node_modules/.bin/nodemon", "-L", "./server.js" ]

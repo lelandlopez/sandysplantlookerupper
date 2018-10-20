@@ -1,1 +1,3 @@
 FROM postgres
+
+COPY . .
