@@ -4,7 +4,9 @@ const express = require('express');
 const {Pool, Client} = require('pg');
 
 // Constants
-const PORT = 5432;
+const INTERNAL_PORT = 8080;
+const EXTERNAL_PORT = 49160;
+const POSTGRES_PORT = 5432;
 const HOST = '0.0.0.0';
 const USER = 'user';
 const DATABASE = 'db';
@@ -15,7 +17,7 @@ const client = new Pool({
   host: 'db',
   database: DATABASE,
   password: PASSWORD,
-  port: PORT,
+  port: POSTGRES_PORT,
 })
 client.connect();
 
@@ -26,5 +28,5 @@ client.connect()
   res.send('Hello world asdfasdf\n');
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(INTERNAL_PORT, HOST);
+console.log(`Running on http://${HOST}:${EXTERNAL_PORT}`);
