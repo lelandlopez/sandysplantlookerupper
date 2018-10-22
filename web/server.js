@@ -1,50 +1,59 @@
 'use strict';
-
 const express = require('express');
-const {Pool, Client} = require('pg');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const {client, queryWrapper} = require('./helpers/db/init.js')
+const {asyncMiddleware} = require('./helpers/db/functions.js')
 
 // Constants
 const INTERNAL_PORT = 8081;
 const EXTERNAL_PORT = 49160;
-const POSTGRES_PORT = 5432;
 const HOST = '0.0.0.0';
-const USER = 'user';
-const DATABASE = 'db';
-const PASSWORD = 'pass';
 
-const client = new Pool({
-  user: USER,
-  host: 'db',
-  database: DATABASE,
-  password: PASSWORD,
-  port: POSTGRES_PORT,
-})
-client.connect();
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/images/uploads')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+    }
+});
+var upload = multer({storage: storage});
 
-const asyncMiddleware = fn => (req, res, next) => {
-  Promise.resolve(fn(req, res, next))
-    .catch(next);
-};
-
-// App
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get('/asdfasdf', asyncMiddleware(async (req, res, next) => {
   res.json(await tempFunc());
 }));
 
+app.post('/uploadImage', upload.single('avatar'), (req, res) => {
+  if (!req.file) {
+    console.log("No file received");
+    return res.send({
+      success: false
+    });
+
+  } else {
+    console.log('file received');
+    const host = req.host;
+    const filePath = req.protocol + "://" + host + '/' + req.file.path;
+    console.log(filePath);
+    return res.send({
+      success: true
+    })
+
+  }
+});
+
 async function tempFunc() {
-  console.log('asdf');
   const query = {
-    text: 'SELECT * FROM asdfasdf',
+    text: "SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'",
     values: [],
   }
 
-  // promise
-  let x =  await client.query(query)
-    .then(docs => {return docs})
-    .catch(e => {return e.stack});
-  console.log(x);
-  return x;
+  return await queryWrapper(query);
 }
 
 app.listen(INTERNAL_PORT, HOST);
