@@ -1,6 +1,0 @@
-{
-"tables": [
-  "CREATE TABLE IF NOT EXISTS plants ( id INT PRIMARY KEY NOT NULL, name varchar(40) NOT NULL);",
-  "CREATE TABLE IF NOT EXISTS plant_descriptions ( id INT PRIMARY KEY NOT NULL, description varchar(40) NOT NULL, plant_id INT REFERENCES plants(id));"
-  ]
-}
