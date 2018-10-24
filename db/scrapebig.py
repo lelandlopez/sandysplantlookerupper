@@ -15,8 +15,8 @@ soup = BeautifulSoup(content, "lxml")
 
 trs = soup.find_all('tr')
 
-start = 20 
-numFiles = 500
+start = 2000 
+numFiles = 5000
 
 driver = webdriver.Firefox()
 
