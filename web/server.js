@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const {client, queryWrapper, upload} = require('./helpers/db/init.js')
+const {queryWrapper, upload} = require('./helpers/db/init.js')
 const {asyncMiddleware} = require('./helpers/db/functions.js')
 
 // Constants
