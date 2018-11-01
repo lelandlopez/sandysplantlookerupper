@@ -58,7 +58,7 @@ function getImageDirs(path) {
 }
 
 
-app.listen(INTERNAL_PORT, HOST);
+app.listen(process.env.PORT || INTERNAL_PORT, HOST);
 console.log(`Running on http://${HOST}:${EXTERNAL_PORT}`);
 
 async function uploadImage() {
