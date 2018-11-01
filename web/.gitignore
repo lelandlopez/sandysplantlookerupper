@@ -1,3 +1,5 @@
 /node_modules
 /public/images/uploads/*
 !/public/images/uploads/README
+*/images/*
+*.jpg

@@ -3,3 +3,8 @@
 */*.csv
 */*.gz 
 */*.py
+*/*.jpg
+*/images
+*/TooSmallCategories
+*/retrain_logs
+*/tmp

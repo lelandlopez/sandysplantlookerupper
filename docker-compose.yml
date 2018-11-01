@@ -15,7 +15,7 @@ services:
     - POSTGRES_DB=db
   web:
     build: ./web
-    command: bash -c "chmod +x ./wait-for-it.sh && chmod +x ./server.js && ./wait-for-it.sh --timeout=0 --host=$${WAIT_HOST} --port=$${WAIT_PORT} -- node_modules/.bin/nodemon ./server.js"]
+    command: bash -c "chmod +x ./wait-for-it.sh && chmod +x ./server.js && ./wait-for-it.sh --timeout=0 --host=$${WAIT_HOST} --port=$${WAIT_PORT} -- node_modules/.bin/nodemon --watch ./server.js"
     environment:
       - WAIT_HOST=db
       - WAIT_PORT=5432
